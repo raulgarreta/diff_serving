@@ -1,0 +1,37 @@
+# Server-side dependencies for policy_server.py
+#
+# Everything needed to run a UMI diffusion-policy checkpoint from this
+# folder. The slimmed `serving/diffusion_policy/` package next to this
+# file covers the inference-time Python imports; this file lists the
+# external PyPI deps those imports pull in.
+#
+# Versions mirror the values pinned in the upstream conda_environment.yaml
+# so a policy checkpoint trained on the main env loads byte-identically
+# here. If you already have an env with the umi/diffusion_policy stack
+# installed, you can skip this file -- just make sure the HTTP layer
+# (fastapi, uvicorn, pydantic) is on top of it.
+
+# --- HTTP serving -------------------------------------------------------
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+
+# --- Model load + execute ----------------------------------------------
+torch==2.1.0
+torchvision==0.16.0
+numpy==1.24.*
+hydra-core==1.2.0
+omegaconf>=2.2,<2.4
+dill==0.3.7
+diffusers==0.18.2
+einops==0.6.1
+timm==0.9.7
+
+# --- Data / normalizer (zarr is imported by the LinearNormalizer module
+#     for its training-time .fit() type signatures; cheap to install,
+#     keeps the inference module loadable without modification). -------
+zarr>=2.16,<3
+
+# --- Misc ---------------------------------------------------------------
+tqdm>=4.65            # progress bar during checkpoint read; optional
+requests>=2.31.0      # used by hydra/diffusers transitively in some envs

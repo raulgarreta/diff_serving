@@ -1,0 +1,8 @@
+# Client-side dependencies for policy_client.py and example_run.py
+#
+# Intentionally minimal: the client just speaks JSON over HTTP and packs
+# numpy arrays. Drop this into any robot bringup / eval / notebook env to
+# talk to a remote policy server -- no torch / hydra / diffusion_policy
+# required.
+requests>=2.31.0
+numpy>=1.24
